@@ -1,11 +1,10 @@
-/*Logica jocului (fara vederea codului sau a interactiunii utilizatorului)
-Jocul este un simplu joc de ghicit literele cuvantului ascuns
-*/
+// FBullAndCowGame.h
+#pragma once
+#include <string>
+#include <map>
+#include <vector>
+#define TMap std::map
 
-#pragma once //pentru a nu importa de doua ori
-#include <string> // libraria string pentru CheckGameValidity pentru a citi string - ul
-
-//pentru a face sintaxa mai prietenoasa cu Unreal
 using FString = std::string;
 using int32 = int;
 
@@ -14,8 +13,7 @@ struct FBullAndCowCount {
 	int32 Cows = 0;
 };
 
-enum class EGuessStatus {//aceasta clasa o vom implemanta in FBullAndCowGame.cpp
-	//ne ajuta sa verificam daca raspunsul jucatorului este in standardul creat de noi
+enum class EGuessStatus {
 	Invalid_Status,
 	OK,
 	Not_Isogram,
@@ -24,24 +22,22 @@ enum class EGuessStatus {//aceasta clasa o vom implemanta in FBullAndCowGame.cpp
 };
 
 class FBullAndCowGame {
-public: // metoda publica // nu expunem nici o variabila public // este int32erfata jocului
-	FBullAndCowGame(); //pentru a crea un constructor scriem numele clasei si cream o metoda
-
-	int32 GetMaxTries() const;// previne modificarea codului scris de noi
+public:
+	FBullAndCowGame();
+	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLength() const;
 	bool IsGameWon() const;
-	EGuessStatus CheckGuessValidity(FString) const; // TODO face o valoare de returnare mai bogata"?"
+	EGuessStatus CheckGuessValidity(FString) const;
+	void Reset();
+	FBullAndCowCount SubmitValidGuess(FString);
 
-	void Reset(); // TODO face o valoare de returnare mai bogata"?"
-	//gasirea unei metode de a contoriza numarul de bulls si cows si de a incrementa numarul incercarilor
-	FBullAndCowCount SubmitValidGuess(FString);//contorizeaza numarul de bulls si cows // asuma incercarile valide
 
 private:
-	//priveste constructorul pentru initializare
 	int32 MyCurrentTry;
-	FString  MyHiddenWord;
+	FString MyHiddenWord;
 	bool bGameIsWon;
+	std::vector<FString> WordList;
 
 	bool IsIsogram(FString) const;
 	bool IsLowercase(FString) const;

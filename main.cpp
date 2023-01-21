@@ -21,13 +21,12 @@ FText GetValidGuess();
 bool AskToPlayAgain();
 void PrintGameSummary();
 
-FBullAndCowGame  BCGame; // este clasa creata de noi cu variabila declarata // cream instant un nou joc
-//am declarat global pentru a avea acces mereu la noul joc.
+FBullAndCowGame BCGame;
 
 int main() {// punctul de intrare in aplicatie
 	bool bPlayAgain = false; // "variabila" bool-eala
 	do {
-
+		BCGame.Reset();
 		PrintIntro();
 		PlayGame();
 		bPlayAgain = AskToPlayAgain();
@@ -36,7 +35,6 @@ int main() {// punctul de intrare in aplicatie
 	return 0;// iesirea din aplicatie
 }
 
-// introducerea jocului
 void PrintIntro() {
 	//prin metoda facuta "GetMyHiddenWordLength" putem schimba constanta si sa eliminam
 	//"constexpr int32 WORD_LENGTH = 5;//expresie constanta" 
@@ -117,6 +115,9 @@ bool AskToPlayAgain() { //functia bool returneaza true sau false
 	FText Response = "";
 	std::getline(std::cin, Response);
 	return (Response[0] == 'y') || (Response[0] == 'Y');
+	if (Response[0] == 'y') {
+		BCGame.GetHiddenWordLength();
+	}
 
 }
 
